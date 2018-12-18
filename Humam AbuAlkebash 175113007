@@ -1,0 +1,97 @@
+
+= RatSLAM =
+
+> Humam Abu-Alkebash ~175113007~
+
+
+RatSLAM is a SLAM system based on the computational models of the navigational processes in the hippocampus, which is part of the brain of mammals. The system consists of three main modules: exposure cells, local image cells, and experience maps.
+
+= Installation =
+
+In order to run the ratslam, it is necessary to have ros installed. In this installation Ubuntu 16.04
+
+== Dependencies
+
+OpenRatSLAM uses the Ros package, opencv2, topological_nav_msgs and Irrlicht, which is a 3D graphic library.
+
+We will add these dependencies to Ubuntu using **apt-get**.
+
+[source,C++]
+----
+$ sudo apt-get install libirrlicht-dev
+----
+[source,C++]
+----
+$ sudo apt-get install libopencv-dev
+----
+
+== Configuration Steps
+
+We need to get the source code to the workspace
+[source,C++]
+----
+$ cd ~/catkin_ws/src
+$ git clone https://github.com/davidmball/ratslam.git ratslam_ros
+$ cd ratslam_ros
+$ git checkout ratslam_ros
+$ cd ~/catkin_ws && catkin_make
+----
+
+
+
+*[underline]##Note:##* may be face this error after *catkin_make* command,
+
+image::https://raw.githubusercontent.com/Humam-PS/RatSLAM/master/RatSLAM_1_error.png[]
+
+To solve it, go to *CMakeLists.txt* file that in *ratslam_ros* folder, and change *find_package(OpenCV)* to *find_package(Opencv)*
+
+image::https://raw.githubusercontent.com/Humam-PS/RatSLAM/master/RatSLAM_01_error.png[]
+
+== Running RatSLAM
+
+The available bag files are provided below. These will create our data set.
+
+* irat_aus_28112011.bag
+* stlucia_2007.bag
+* oxford_newcollege.bag
+
+You can download them all from this link:
+http://url[https://wiki.qut.edu.au/display/cyphy/OpenRatSLAM+datasets]
+
+Put the data sets you have downloaded into the *Home* directory.
+
+The following 3 separate commands are written for 3 separate dataset. Any of them will run the algorithm.
+
+*[underline]##Note:##* After running the command in the first line, several empty windows will open. Then, you can export the bag file to ratslam and start the simulation with the command on the second line. Empty windows will be filled with some visualizations.
+
+
+[source,C++]
+----
+roslaunch ratslam_ros irataus.launch
+rosbag play irat_aus_28112011.bag
+----
+[source,C++]
+----
+roslaunch ratslam_ros stlucia.launch
+rosbag play stlucia_2007.bag
+----
+[source,]
+----
+roslaunch ratslam_ros oxford_newcollege.launch
+rosbag play oxford_newcollege.bag
+----
+
+
+= *Result* =
+
+1.irat_aus_28112011.bag
+
+image::https://github.com/Humam-PS/RatSLAM/blob/master/irat_aus_28112011.png?raw=true[]
+
+2.stlucia_2007.bag
+
+image::https://raw.githubusercontent.com/Humam-PS/RatSLAM/master/stlucia_2007.png[]
+
+3.oxford_newcollege.bag
+
+image::https://raw.githubusercontent.com/Humam-PS/RatSLAM/master/oxford_newcollege.png[]
